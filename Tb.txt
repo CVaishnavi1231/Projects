@@ -1,0 +1,238 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <string.h>
+#include <conio.h>
+using namespace std;
+
+class node
+{
+    public:
+    char info;
+    int n;
+    class node *next;
+    void letters_display_list();
+    void delete_letter(char dellet);
+    void print_list();
+    void scoring(int total_moves);
+    void compare(char [],int);
+}*first;
+char letters[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+void node ::letters_display_list(void)
+{
+    node *ptr,*cpt;
+    ptr= new(node);
+    ptr->info='A';
+    /*cout<<ptr->info;*/
+    ptr->next = NULL;
+    first=ptr;
+        for(int i=1;i<26;i++)
+        {
+            cpt=new(node);
+            cpt->info = letters[i];
+            /*cout<<cpt->info;*/
+            ptr->next = cpt;
+            cpt->next= NULL;
+            ptr=cpt;
+        }
+}
+
+void node :: delete_letter(char dellet)
+{
+    if(islower(dellet))
+     {dellet=toupper(dellet);}
+    node *ptr,*cpt;
+    ptr=first;
+    while(ptr->info!=dellet)
+        {
+            ptr=ptr->next;
+            cpt=ptr;
+        }
+    cpt->info=NULL;
+    print_list();
+}
+void node:: print_list()
+{
+    node *ptr;
+    ptr=first;
+    while(ptr!=NULL)
+    {
+        cout<<ptr->info<<endl;
+        ptr=ptr->next;
+    }
+}
+void node:: scoring(int total_moves)
+ {
+        int score;
+        score = ((total_moves-n)*100);
+        cout<<"score is"<<score<<endl;
+ }
+
+
+
+int main()
+{
+string word;
+int length=0;
+string words[100]
+{
+"magic",
+"wizard",
+"hogwarts",
+"giants",
+"muggles",
+"wand",
+"snitch",
+"potter",
+"rowling",
+"london",
+"hogsmade",
+"horcrux",
+"quidditch",
+"seeker",
+"trolls",
+"unicorn",
+"dungeon",
+"potions",
+"padfoot",
+"werewolf",
+"dementors",
+"phoenix",
+"azkaban",
+"lumos",
+"dragons",
+"champions",
+"quaffle",
+"wormtail",
+"hedwig",
+"oracle",
+"summoning",
+"triwizard",
+"elves",
+"squib",
+"patronous",
+"prophecy",
+"polyjuice",
+"firebolt",
+"remebrall",
+"thestral",
+"pensieve",
+"fluffy",
+"stmungo",
+"beauxbatons",
+"gillyweed",
+"divination",
+"grindylows",
+"boggart",
+"nagini",
+"basilisk",
+"occlumency",
+"nargles",
+"alohomora",
+"cruciatus",
+"aragog",
+"disapperate",
+"portkey",
+"omnioculars",
+"veela",
+"leperchauns",
+"veritaserum",
+"grawp",
+"inferi",
+"phlegm",
+"greyback",
+"amortentia",
+"bezoar",
+"deluminator",
+"spattergroit",
+"aguamenti"
+	};
+
+srand(time(NULL));
+	int n=rand()%75;
+	word=words[n];
+	char temp[20];
+	strcpy(temp,word.c_str());
+	length=strlen(temp);
+	node x;
+   x.compare(temp,length);
+
+    /*x.n=0;
+    x.letters_display_list();
+    x.scoring(5);*/
+    getch();
+
+}
+void node::compare(char temp[],int length)
+{
+    int pos=-1,i,len,t,trial;
+    len=length;
+    trial=9;
+    char str[len];
+    char c,d;
+    strcpy(str,temp);
+    char str2[len];
+    t=0;
+     int flag=1;
+
+    for(i=0;i<len;i++)
+        {
+
+            str2[i]= '_';
+            cout<<"_ ";
+        }
+    cout<<" "<<endl;
+    cout<<" "<<endl;
+    cout<< "SHOOT"<<endl;
+   while(trial!=0 && !(flag==0 || flag==-1))
+   {
+    cout<<" "<<endl;
+    cout<<" "<<endl;
+    cout<<" Guess"<<endl;
+    cin>>d;
+    c = tolower(d);
+    for(i=0;i<len;i++)
+    {
+      letters_display_list();
+        print_list();
+        delete_letter(c);
+
+        if(str[i]==c)
+        {
+            pos=i;
+            t=1;
+            for(int j=0;j<len;j++)
+                if(j==pos)
+                    str2[pos]=c;
+        }
+
+    }
+        if(t==0)
+        {
+         trial--;
+         cout<<"OOPS! SORRY TRY AGAIN"<<endl;
+         cout<<"Trials left"<<trial<<endl;
+         t=0;
+        }
+
+        t=0;
+        for(int k=0;k<len;k++)
+            cout<<str2[k]<<" ";
+        flag=strcmp(str,str2);
+        cout<<endl<<flag;
+}
+        if (flag==-1 || flag==0
+            )
+        {
+            cout<<endl<<"\nGreat job!! You've been accepted into Hogwarts"<<endl;
+
+        }
+        if(trial==0)
+    {
+        cout<<"\n\nThe Word is "<<str;
+
+    }
+
+}
+
+
